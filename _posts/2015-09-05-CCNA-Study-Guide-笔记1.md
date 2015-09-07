@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "《CCNA学习指南》笔记1"
+title:  "《CCNA学习指南》笔记：思科IOS系统初探"
 date:   2015-09-05 22:33:00
 categories: CCNA
 excerpt: 《CCNA学习指南》学习笔记
