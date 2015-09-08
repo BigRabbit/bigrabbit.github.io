@@ -22,6 +22,7 @@ sqlnet.ora 用于oracle 客户端，用于配置连接Oracle数据库服务器�
 	
 	
 	取值：
+
 	- NONE：Oracle数据库身份验证，如在数据库服务器上输入`conn sys/password@oracle as sysdba`才可登录。
 	- NTS：操作系统身份验证，即OS认证，例如在数据库服务器上输入`conn / as sysdba`便可登录。
 	- ALL：两者均可。
@@ -39,6 +40,7 @@ sqlnet.ora 用于oracle 客户端，用于配置连接Oracle数据库服务器�
 	假设NAMES.DIRECTORY_PATH=(tnsnames, hostname, Ezconnect)。我们在客户端输入`sqlplus sys/oracle@orcl `，客户端首先会从tnsnames.ora查找要连接的字符串（如orcl）记录；若tnsname.ora文件中无此记录，客户端尝试把要连接的字符串（如orcl）当作一个主机名，通过网络的途径去解析其ip地址，然后再连接此ip上GLOBAL_DBNAME=连接字符串（如orcl）这个实例，当然这里连接字符串（如orcl）并不是一个主机名，最后会尝试以ezconnect的方式连接数据库。
 
 	取值区间：
+
 	- tnsnames
 	- hostname 
 	- onames
