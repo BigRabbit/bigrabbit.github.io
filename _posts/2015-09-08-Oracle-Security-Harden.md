@@ -23,9 +23,9 @@ sqlnet.ora 用于oracle 客户端，用于配置连接Oracle数据库服务器�
 	
 	取值：
 
-	+ NONE：Oracle数据库身份验证，如在数据库服务器上输入`conn sys/password@oracle as sysdba`才可登录。
-	+ NTS：操作系统身份验证，即OS认证，例如在数据库服务器上输入`conn / as sysdba`便可登录。
-	+ ALL：两者均可。
+ + NONE：Oracle数据库身份验证，如在数据库服务器上输入`conn sys/password@oracle as sysdba`才可登录。
+ + NTS：操作系统身份验证，即OS认证，例如在数据库服务器上输入`conn / as sysdba`便可登录。
+ + ALL：两者均可。
 
 	默认值：NONE
 	
@@ -41,13 +41,13 @@ sqlnet.ora 用于oracle 客户端，用于配置连接Oracle数据库服务器�
 
 	取值区间：
 
-	+ tnsnames
-	+ hostname 
-	+ onames
-	+ onames
-	+ cds
-	+ nis
-	+ Ezconnect
+ + tnsnames
+ + hostname 
+ + onames
+ + onames
+ + cds
+ + nis
+ + Ezconnect
 	
 	默认值：(tnsnames, onames, hostname)
 
