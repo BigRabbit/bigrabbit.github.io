@@ -2,11 +2,19 @@
 layout: post
 title:  "Oracle 安全加固-1. Oracle网络配置及加固建议 "
 date:   2015-09-04 22:11:00
-categories: Oracle
-excerpt: Oracle 安全加固
+category: Oracle
+tags: [Oracle, Security]
 ---
 * content
 {:toc}
+
+连接到Oracle数据库常见的命令形式有：
+
+1.  `sqlplus / as sysdba` : 典型操作系统认证，连接到Oracle本地数据库，不需要监听进程。
+2.  `sqlplus sys/oracle` : 只能连接到Oracle本地数据库，同样不需要监听进程。
+3.  `sqlplus sys/oracle@orcl`：网络连接Oracle数据库，可以本地/远程数据库，需要监听进程处于可用状态。
+
+接下来着重介绍网络登录Oracle数据库的相关配置文件以及安全加固方法。
 
 ##1. 配置文件##
 
@@ -14,7 +22,7 @@ Oracle网络配置涉及sqlnet.ora、tnsnames.ora、listener.ora三个文件。�
 
 ### 1.1 sqlnet.ora###
 
-sqlnet.ora 用于oracle 客户端，用于配置连接Oracle数据库服务器的相关参数。
+sqlnet.ora 用在oracle 客户端，配置连接Oracle数据库服务器的相关参数。
 
 相关参数：
 
@@ -50,6 +58,16 @@ sqlnet.ora 用于oracle 客户端，用于配置连接Oracle数据库服务器�
 	+ Ezconnect
 	
 	默认值：(tnsnames, onames, hostname)
+- TCP.VALIDNODE_CHECKING：启动/关闭**Oracle Net Valid Node Checking（网络合法节点检查）**，轻量级的访问控制策略来控制监听器允许或者拒绝某些IP访问Oracle数据库，从8i起开始提供这个功能，**只需在Oracle服务器端配置**。
+- TCP.EXCLUDED_NODES：指定哪些客户端不允许通过TCP/IP协议访问数据库，可以通过reload生效。
+- TCP.INVITED_NODES：指定哪些客户端允许通过TCP/IP协议访问数据库，可以通过reload生效。只两个参数从11g起支持通配符如172.1.2.*。
+
+**Oracle Net Valid Node Checking（网络合法节点检查）**
+
+1. tcp.invited_nodes和tcp.excluded_nodes存在冲突时，以tcp.invited_nodes 为主。
+2. 每次修改后要重启监听。
+3. 数据库服务器的ip也要加入 tcp.invited_nodes。
+
 
 ### 1.2 tnsnames.ora###
 
@@ -79,7 +97,7 @@ tnsnames.ora 一般用于Oracle客户端，配置连接数据库的连接信息�
 - PORT：TCP/IP使用的端口地址。
 - SERVICE_NAME：Oracle数据库服务器的服务名，必须和数据库服务器`;show parameter service_name;`输出一致。
 - SID：指定要连接的服务器上ORACLE数据库的ORACLE_SID。
-- SERVER=DEDICATED 表示用专用服务器连接ORACLE数据库。
+- SERVER：数据库连接方式，SHARED或DEDICATED ，DEDICATED 是专有连接方式，SHARED是共享连接方式。区别在于专有连接方式是一个用户对应一个数据库服务器进程，而共享服务器连接方式是多个用户可以不定向轮流使用一个服务器进程。可以通过`show parameter shared_servers;`判断数据库服务器的连接模式，其中**0**表示**专有连接方式**，**1**表示**共享连接方式**。
 
 ###1.3 listener.ora###
 
@@ -88,11 +106,17 @@ tnslsnr进程是监听、并接受远程连接数据库请求的监听进程，l
 使用命令`lsnrctl`加上参数`start/stop/status`来执行启动Oracle监听器、关闭Oracle监听器和查看Oracle监听器的状态。
 
 ###1.4 小结###
-上述三个配置文件均可以通过GUI配置工具来完成配置，如netca、netmgr。其中netca是以向导模式进行配置的。其中netmgr比较常用，配置界面如下图所示。
+上述三个配置文件均可以通过GUI配置工具来完成配置，如netca、netmgr。其中netca是以向导模式进行配置的，图形化界面比较简洁，建议初学者使用。其中netmgr比较常用，配置界面如下图所示。
 ![netmgr]({{ "/css/pics/Oracle/Oracle_net_cfg.PNG"}})  
 
-##2. 加固建议##
+##2. 客户端登录数据库服务器##
 
+当你输入sqlplus sys/oracle@orcl，具体的登录步骤如下：
+
+1. 查询sqlnet.ora名称的解析方式，发现是TNSNAME 。
+2. 从tnsnames.ora文件查询orcl的记录，并解析得到主机名或IP、端口及service_name。
+3. 尝试与数据库服务器的listener进程建立连接。   
+4. 依据不同的服务器模式，如专用服务器模式或者共享服务器模式，listener采取接下去的动作。默认是专用服务器模式，没有问题的话客户端就连接上了数据库的server process。
 
 参考链接：
 

@@ -2,8 +2,8 @@
 layout: post
 title:  "《CCNA学习指南》读书笔记-2. 思科IOS系统"
 date:   2015-09-05 22:33:00
-categories: CCNA
-excerpt: 《CCNA学习指南》读书笔记
+category: CCNA
+tags: [CCNA]
 ---
 * content
 {:toc}

@@ -1,64 +1,43 @@
 ---
 layout: default
 ---
-<div id="index" class="row">
-  <div class="col-sm-9">
-    <div class="post-area">
-      <!-- small button -->
-     <!--  <p class="pull-right visible-xs">
-       <button>toggle</button>
-     </p> -->
-      <div class="post-list-header">
-        文章列表
-      </div>
-      <div class="post-list-body">
-        
-        <div class="all-posts" post-cate="All">
-          {% for post in site.posts %}
-            <a class="post-list-item" href="{{ post.url | prepend: site.baseurl }}">
-              <h2>
-              {{ post.title }}
-              </h2>
-              <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
-            </a>
-          {% endfor %}
-        </div>
-        <!-- <div class="posts-in-categories"> -->
-        {% for category in site.categories %}
-          <div post-cate="{{category | first}}">
-            {% for posts in category  %}
-              {% for post in posts %}
-                {% if post.url %}
-                  <a href="{{ post.url }}" class="post-list-item">
-                    <h2>
-                    {{ post.title }}
-                    </h2>
-                    <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            {% endfor %}
-          </div>
-        {% endfor %}
-        
-        <!-- </div> -->
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="shadow-corner-curl hidden-xs">
-      <div class="categories-list-header">
-        Categories
-      </div>
-      
-      <a href="javascript:;" class="categories-list-item" cate="All">
-        All<span class="my-badge"> {{site.categories | size}}</span>
-      </a>
-      {% for category in site.categories %}
-        <a href="javascript:;" class="categories-list-item" cate="{{ category | first }}">
-          {{ category | first }} <span class="my-badge">{{ category | last | size }}</span>
-        </a>
-      {% endfor %}
-    </div>
+<div class="col-md-9">
+  {% for post in paginator.posts %}
+  <h3 class="title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+  {% if post.content contains "<!-- more -->" %}
+  {{ post.content | split:'<!-- more -->' | first }}
+  {% else %}
+  {{ post.content | strip_html | truncate:50 }}
+  {% endif %}
+  {% endfor %}
+
+  <!-- Pagination links -->
+  <div class="pull-right">
+    {% if paginator.previous_page %}
+    {% if paginator.previous_page == 1 %}
+    <a class="btn btn-primary btn-sm" href="/">Home</a>
+    <a class="btn btn-primary btn-sm" href="/">&laquo; Prev</a>
+    {% else %}
+    <a class="btn btn-primary btn-sm" href="/">Home</a>
+    <a class="btn btn-primary btn-sm" href="/page{{paginator.previous_page}}/">&laquo; Prev</a>
+    {% endif %}
+    {% else %}
+    <span><a class="btn btn-primary btn-sm disabled" href="/">Home</a></span>
+    <span><a class="btn btn-primary btn-sm disabled">&laquo; Prev</a></span>
+    {% endif %}
+    <span><a class="btn btn-primary btn-sm disabled">Page: {{paginator.page}} of {{paginator.total_pages}}</a></span>
+    {% if paginator.next_page %}
+    <a class="btn btn-primary btn-sm" href="/page{{paginator.next_page}}/">Next &raquo;</a>
+    <a class="btn btn-primary btn-sm" href="/page{{paginator.total_pages}}/">Last</a>
+    {% else if paginator.page == paginator.total_pages %}
+    <span><a class="btn btn-primary btn-sm disabled">Next &raquo;</a></span>
+    <span><a class="btn btn-primary btn-sm disabled">Last</a></span>
+    {% endif %}
   </div>
 </div>
+<aside class="col-md-3 visible-lg visible-md">
+  {% include categories.html %}
+  {% include recently_posts.html %}
+  {% include recently_comments.html %}
+  {% include blogroll.html %}
+</aside>
