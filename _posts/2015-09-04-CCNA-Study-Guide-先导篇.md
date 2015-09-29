@@ -2,11 +2,9 @@
 layout: post
 title:  "《CCNA学习指南》读书笔记-1. GNS3如何模拟交换机 "
 date:   2015-09-04 22:11:00
-category: CCNA
-tags: [CCNA]
+category: CISCO
+tags:  [CISCO, CCNA]
 ---
-* content
-{:toc}
 
 ##1. 题记##
 
