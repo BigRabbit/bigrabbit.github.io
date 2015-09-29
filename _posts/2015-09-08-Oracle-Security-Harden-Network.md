@@ -5,14 +5,17 @@ date:   2015-09-04 22:11:00
 category: Oracle
 tags: [Oracle, Security]
 ---
-* content
-{:toc}
+
+
+##Oracle网络服务概述
+
+Oracle 数据库是网络数据库。Oracle支持多种网络协议，从而为数据库上运行的Oracle进程和在网络中其他计算机运行的Oracle应用程序的用户进程提供了接口。
 
 连接到Oracle数据库常见的命令形式有：
 
 1.  `sqlplus / as sysdba` : 典型操作系统认证，连接到Oracle本地数据库，不需要监听进程。
 2.  `sqlplus sys/oracle` : 只能连接到Oracle本地数据库，同样不需要监听进程。
-3.  `sqlplus sys/oracle@orcl`：网络连接Oracle数据库，可以本地/远程数据库，需要监听进程处于可用状态。
+3.  `sqlplus sys/oracle@orcl`：，可以本地/远程数据库，需要监听进程处于可用状态。
 
 接下来着重介绍网络登录Oracle数据库的相关配置文件以及安全加固方法。
 
@@ -73,6 +76,7 @@ sqlnet.ora 用在oracle 客户端，配置连接Oracle数据库服务器的相�
 
 tnsnames.ora 一般用于Oracle客户端，配置连接数据库的连接信息，提供tnsname别名到主机名或者ip的映射，类似系统中的hosts文件一样。仅当sqlnet.ora中NAMES.DIRECTORY_PATH参数包含 TNSNAMES才会生效，也就是客户端解析连接字符串的顺序包含了TNSNAMES，客户端才会尝试使用该文件。
 
+ 
 如果是客户机/服务器结构，整个网络上只有一台机器安装了ORACLE数据库服务器，那么只需在每个要访问ORACLE服务器的客户机上定义该文件，在服务器上无需定义。但是，如果网络上有多台机器均安装了ORACLE数据库服务器，并且服务器之间有数据共享的要求，那么在每台服务器上都必须定义该文件。
 
 一个示例tnsnames.ora配置文件如下：

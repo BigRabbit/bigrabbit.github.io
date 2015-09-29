@@ -18,15 +18,15 @@ tags: [CCNA]
 
 第1步：从菜单**编辑**打开**标示符管理器**，从左侧选取**ethernet_switch**图标添加到右侧，然后在**自定义节点设置**的**类型**下拉框选中**Router c3600**，在**名称**中修改**Switch**，最后一定点击**应用**。
 
-![模拟交换机]({{ "/css/pics/CCNA/switch_sim_1.PNG"}})  
+![模拟交换机]({{ "/assets/img/CCNA/switch_sim_1.PNG"}})  
 第2步：从把**Switch**图标拖到拓扑图上，然后通过选择右键**修改设备名称**，把设备名称修改**SW1**。
 
-![模拟交换机]({{ "/css/pics/CCNA/switch_sim_2.PNG"}})  
+![模拟交换机]({{ "/assets/img/CCNA/switch_sim_2.PNG"}})  
 第3步：通过右键**配置**，点击在**插槽**选项卡，在**适配卡**的**slot 0**下拉框中选择**NM-16ESW**。其中**NM-16ESW**是一1个16端口10/100以太交换网络模块，用来提供交换机端口。
 
-![模拟交换机]({{ "/css/pics/CCNA/switch_sim_3.PNG"}})  
+![模拟交换机]({{ "/assets/img/CCNA/switch_sim_3.PNG"}})  
 第4步：通过右键**启动**，启动此设备。待过一段时间设备启动后，再通过右键**Console**打开Console命令终端，输入`no ip routing`命令，进而关闭路由功能，完成实现模拟二层交换机。
 
-![模拟交换机]({{ "/css/pics/CCNA/switch_sim_4.PNG"}})  
+![模拟交换机]({{ "/assets/img/CCNA/switch_sim_4.PNG"}})  
 
 参考链接：[在GNS3中模拟交换机和PC](http://www.2cto.com/net/201302/188242.html)
